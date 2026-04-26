@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block title %} 
+   Tweet List
+{% endblock %}
+{% block content %}
+<div class="hero-header">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start gap-3 mb-4">
+        <div>
+            <h1 class="display-6 fw-bold">Share your latest thought.</h1>
+            <p class="lead text-muted mb-0">A beautiful place to add image-backed tweets and manage them quickly.</p>
+        </div>
+        <a href="{% url 'create_tweet' %}" class="btn btn-success btn-lg align-self-center">Create New Tweet</a>
+    </div>
+</div>
+<div class="row g-4 justify-content-center">
+{% for tweet in tweets %}
+<div class="col-sm-6 col-md-4 col-lg-3">
+  <div class="card shadow-sm h-100 tweet-card">
+        {% if tweet.photo %}
+            <img src="{{tweet.photo.url}}" alt="Tweet Photo" class="card-img-top img-fluid tweet-card-img"/>
+        {% endif %}
+  <div class="card-body">
+        <h5 class="card-title">{{tweet.user.username}}</h5>
+        <p class="card-text">{{tweet.content}}</p>
+        {% if tweet.user == request.user %}
+        <a href="{% url 'edit_tweet' tweet.pk %}" class="btn btn-primary mt-4">Edit</a>
+        <a href="{% url 'delete_tweet' tweet.pk %}" class="btn btn-danger mt-4">Delete</a>
+        {% endif %}
+  </div>
+  </div>
+</div>
+{% endfor %}
+</div>
+{% endblock %}

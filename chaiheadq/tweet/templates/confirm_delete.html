@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block title %} 
+   Home Page 
+{% endblock %}
+
+{% block content %}
+
+    <div class="confirm-card text-center">
+        <h1 class="mb-3">Delete Tweet</h1>
+        <p class="text-muted mb-4">Are you sure you want to remove this post?</p>
+        <div class="mb-4">
+            <p class="lead">{{ tweet.content }}</p>
+            {% if tweet.photo %}
+                <img src="{{ tweet.photo.url }}" alt="Tweet Photo" class="img-fluid rounded-3" style="max-height: 240px;"/>
+            {% endif %}
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger me-3">Delete</button>
+            <a href="{% url 'tweet_list' %}" class="btn btn-outline-light">Cancel</a>
+        </form>
+    </div>
+{% endblock %}
